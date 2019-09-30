@@ -1,0 +1,36 @@
+<div class="card">
+    <h5 class="card-header">{{ employee.name }}</h5>
+    <div class="card-body row">
+        <div class="col-4">
+            <img class="card-img-top" [src]="employee.photoPath" alt="Card image cap">
+        </div>
+        <div class="col-4">
+            <strong>Gender:</strong>
+            <strong>GenDate of Birth:</strong>
+            <strong>Contact Preference:</strong>
+            <strong>Email:</strong>
+            <strong>Phone:</strong>
+            <strong>Department:</strong>
+            <strong>Is Active:</strong>
+        </div>
+        <div class="col-4">
+            <div>{{ employee.gender }}</div>
+            <div>{{ employee.dateOfBirth | date }}</div>
+            <div>{{ employee.contactPreference }}</div>
+            <div>{{ employee.email }}</div>
+            <div>{{ employee.phone }}</div>
+            <div [ngSwitch]="employee.department">
+                <span *ngSwitchCase="1">Help Desk</span>
+                <span *ngSwitchCase="2">HR</span>
+                <span *ngSwitchCase="3">IT</span>
+                <span *ngSwitchCase="4">Payroll</span>
+                <span *ngSwitchDefault>N/A</span>
+            </div>
+            <div>{{ employee.isActive }}</div>
+        </div>
+    </div>
+    <div class="btn-group" role="group" aria-label="Basic example">
+        <button class="btn btn-primary" type="button" [routerLink]="['/list', {id: employee.id}]" queryParamsHandling="preserve">Back</button>
+        <button class="btn btn-secondary" type="button" (click)=nextEmployee()>Next Employee</button>    
+    </div>
+</div>

@@ -1,0 +1,7 @@
+<h5 class="card-header" [class.bg-success]="hasJustViewed" (click)="isHidden = !isHidden">{{ title }}</h5>
+<div [hidden]="isHidden">
+    <ng-content select=".myPanelBody"></ng-content>
+</div>
+<footer class="card-footer" [hidden]="isHidden">
+    <ng-content select=".myPanelFooter"></ng-content>
+</footer>

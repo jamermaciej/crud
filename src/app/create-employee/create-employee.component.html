@@ -1,0 +1,132 @@
+<div class="card">
+    <h5 class="card-header">{{ headerTitle }}</h5>
+    <div class="card-body">
+        <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name" aria-describedby="nameHelp"
+                    placeholder="Enter name" formControlName="name" (blur)="logValidationErrors()">
+                <div class="form-error" *ngIf="formErrors.name">
+                    {{ formErrors.name }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp"
+                    placeholder="Enter email" formControlName="email" (blur)="logValidationErrors()">
+                <div class="form-error" *ngIf="formErrors.email">
+                    {{ formErrors.email }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone number"
+                    formControlName="phone" (blur)="logValidationErrors()">
+                <div class="form-error" *ngIf="formErrors.phone">
+                    {{ formErrors.phone }}
+                </div>
+            </div>
+            <fieldset class="form-group">
+                <legend class="col-form-label pt-0">Contact Preference</legend>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="contactPreference" id="contactPreferenceEmail"
+                        value="Email" formControlName="contactPreference">
+                    <label class="form-check-label" for="contactPreferenceEmail">Email</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="contactPreference" id="contactPreferencePhone"
+                        value="Phone" formControlName="contactPreference">
+                    <label class="form-check-label" for="contactPreferencePhone">Phone</label>
+                </div>
+                <div class="form-error" *ngIf="formErrors.contactPreference">
+                    {{ formErrors.contactPreference }}
+                </div>
+            </fieldset>
+            <fieldset class="form-group">
+                <legend class="col-form-label pt-0">Gender</legend>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="gender" id="male" value="Male"
+                        formControlName="gender">
+                    <label class="form-check-label" for="male">Male</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="gender" id="female" value="Female"
+                        formControlName="gender">
+                    <label class="form-check-label" for="female">Female</label>
+                </div>
+                <div class="form-error" *ngIf="formErrors.gender">
+                    {{ formErrors.gender }}
+                </div>
+            </fieldset>
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" name="isActive" id="isActive"
+                    formControlName="isActive">
+                <label class="form-check-label" for="isActive">Is Active</label>
+            </div>
+            <div class="form-group">
+                <label for="department">Department</label>
+                <select class="form-control" name="department" id="department" formControlName="department">
+                    <option value="">Choose a department</option>
+                    <option *ngFor="let department of departments" [value]="department.id">{{ department.name }}
+                    </option>
+                </select>
+                <div class="form-error" *ngIf="formErrors.department">
+                    {{ formErrors.department }}
+                </div>
+            </div>
+            <div class="form-group datepiker">
+                <label for="dateOfBirth">Date of Birth</label>
+                <input type="text" id="dateOfBirth" placeholder="Datepicker" class="form-control" bsDatepicker
+                    formControlName="dateOfBirth">
+                <div class="form-error" *ngIf="formErrors.dateOfBirth">
+                    {{ formErrors.dateOfBirth }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="photoPath">Photo Path</label>
+                <input type="text" class="form-control" id="photoPath" name="photoPath" aria-describedby="photoPathHelp"
+                    placeholder="Photo path" formControlName="photoPath">
+                <button type="button" (click)="togglePhotoPeview()" *ngIf="employeeForm.get('photoPath').value"
+                    class="btn btn-primary toggle-photo">{{ showPhoto ? "Hide" : "Show"}} Preview</button>
+                <img [src]="employeeForm.get('photoPath').value" alt=""
+                    *ngIf="employeeForm.get('photoPath').value && showPhoto">
+                <div class="form-error" *ngIf="formErrors.photoPath">
+                    {{ formErrors.photoPath }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password"
+                    aria-describedby="passwordHelp" placeholder="Enter password" formControlName="password">
+                <div class="form-error" *ngIf="formErrors.password">
+                    {{ formErrors.password }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+                    aria-describedby="confirmPassworddHelp" placeholder="Enter Confirm Password"
+                    formControlName="confirmPassword">
+                <div class="form-error" *ngIf="formErrors.confirmPassword">
+                    {{ formErrors.confirmPassword }}
+                </div>
+                <span *ngIf="employeeForm.errors?.misMatch">Password do not match!</span>
+            </div>
+            <button type="submit" [disabled]="!employeeForm.invalid" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+
+
+<ng-template #discardModal>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Are you sure you want to discard your changes?</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <button type="button" class="btn btn-secondary" (click)="modalRef.hide()">Keep</button>
+        <button type="button" class="btn btn-primary" (click)="discardChanges()">Discard</button>
+    </div>
+</ng-template>

@@ -1,0 +1,10 @@
+<!-- <app-filter [filterList]="employees" (filteredEmitter)="filteredEmployees($event)" (filterTextEmitter)=filterTextEvent($event)></app-filter> -->
+<div class="form-group">
+    <label for="filterText">Filter:</label>
+    <input type="text" [(ngModel)]="filterText" class="form-control" id="filterText" name="name" aria-describedby="filterTextHelp"
+        placeholder="Enter filter text" >
+</div>
+
+<div class="card" *ngFor="let employee of filteredEmployees">
+    <app-display-employee [employee]="employee" [filterText]='filterText' (nofifyDelete)="onDeliteNotification($event)"></app-display-employee>
+</div>

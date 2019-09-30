@@ -1,0 +1,8 @@
+.spinner {
+    position: fixed;
+    top: calc(50% - 50px);
+    left: calc(50% - 50px);
+    width: 100px;
+    height: 100px;
+    z-index: 1;
+}
