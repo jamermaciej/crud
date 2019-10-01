@@ -8,7 +8,7 @@ export class PasswordValidator {
             return null;
         }
         return password && confirmPassword && password.value !== confirmPassword.value ?
-            { 'misMatch': true } :
+            { 'passwordMismatch': true } :
             null;
     }
 }

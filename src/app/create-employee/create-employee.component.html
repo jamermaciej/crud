@@ -92,23 +92,27 @@
                     {{ formErrors.photoPath }}
                 </div>
             </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" name="password"
-                    aria-describedby="passwordHelp" placeholder="Enter password" formControlName="password">
-                <div class="form-error" *ngIf="formErrors.password">
-                    {{ formErrors.password }}
+            <div formGroupName="passwordGroup">
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password"
+                        aria-describedby="passwordHelp" placeholder="Enter password" formControlName="password">
+                    <div class="form-error" *ngIf="formErrors.password">
+                        {{ formErrors.password }}
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="confirmPassword">Confirm Password</label>
-                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
-                    aria-describedby="confirmPassworddHelp" placeholder="Enter Confirm Password"
-                    formControlName="confirmPassword">
-                <div class="form-error" *ngIf="formErrors.confirmPassword">
-                    {{ formErrors.confirmPassword }}
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+                        aria-describedby="confirmPassworddHelp" placeholder="Enter Confirm Password"
+                        formControlName="confirmPassword">
+                    <div class="form-error" *ngIf="formErrors.confirmPassword">
+                        {{ formErrors.confirmPassword }}
+                    </div>
+                    <div class="form-error" *ngIf="formErrors.passwordGroup">
+                        {{ formErrors.passwordGroup }}
+                    </div>
                 </div>
-                <span *ngIf="employeeForm.errors?.misMatch">Password do not match!</span>
             </div>
             <button type="submit" [disabled]="!employeeForm.invalid" class="btn btn-primary">Submit</button>
         </form>

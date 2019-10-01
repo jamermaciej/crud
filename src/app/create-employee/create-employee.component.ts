@@ -67,11 +67,14 @@ export class CreateEmployeeComponent implements OnInit {
     'photoPath': {
       'required': 'Photo path is required.'
     },
+    'passwordGroup': {
+      'passwordMismatch': 'Password and confirm password do not match.'
+    },
     'password': {
       'required': 'Password is required.'
     },
     'confirmPassword': {
-      'required': 'Confirm password is required.'
+      'required': 'Confirm password is required.',
     }
   };
 
@@ -84,6 +87,7 @@ export class CreateEmployeeComponent implements OnInit {
     'department': '',
     'dateOfBirth': '',
     'photoPath': '',
+    'passwordGroup': '',
     'password': '',
     'confirmPassword': ''
   };
@@ -113,10 +117,12 @@ export class CreateEmployeeComponent implements OnInit {
       department: ['', Validators.required],
       dateOfBirth: ['', Validators.required],
       photoPath: ['', Validators.required],
-      password: ['', Validators.required],
       isActive: '',
-      confirmPassword: ['', Validators.required],
-    }, { validator: PasswordValidator.validatePassword });
+      passwordGroup: this.formBuilder.group({
+        password: ['', Validators.required],
+        confirmPassword: ['', Validators.required]
+      }, { validator: PasswordValidator.validatePassword}),
+    });
 
     this.route.paramMap.subscribe(param => {
       const id = +param.get('id');
@@ -175,21 +181,22 @@ export class CreateEmployeeComponent implements OnInit {
   logValidationErrors(group: FormGroup = this.employeeForm): void {
     Object.keys(group.controls).forEach((key: string) => {
       const abstractControl = group.get(key);
+      this.formErrors[key] = '';
+      // console.log(`Key = ${key} Value = ${abstractControl.value}`);
+
+      if ( abstractControl && abstractControl.invalid && (abstractControl.touched || abstractControl.dirty)) {
+        const messages = this.validatorsMessages[key];
+        // for (const errorKey of Object.keys(abstractControl.errors)) {
+        for (const errorKey in abstractControl.errors) {
+          if (errorKey) {
+            this.formErrors[key] += `${messages[errorKey]} \n`;
+          }
+        }
+      }
+
       // sprawdzenie czy nie ma zagniezdzonych fromGroup
       if (abstractControl instanceof FormGroup) {
         this.logValidationErrors(abstractControl);
-      } else {
-        this.formErrors[key] = '';
-        // console.log(`Key = ${key} Value = ${abstractControl.value}`);
-        if ( abstractControl && abstractControl.invalid && (abstractControl.touched || abstractControl.dirty)) {
-          const messages = this.validatorsMessages[key];
-          // for (const error in abstractControl.errors)
-          for (const errorKey of Object.keys(abstractControl.errors)) {
-            if (errorKey) {
-              this.formErrors[key] += `${messages[errorKey]} \n`;
-            }
-          }
-        }
       }
     });
   }
@@ -210,7 +217,7 @@ export class CreateEmployeeComponent implements OnInit {
     if (this.employeeForm.get('id').value === null) {
       this.employeeSerive.addEmployee(this.employeeForm.value).subscribe(data => {
         // this.employeeForm.reset();
-        // this.router.navigate(['list']);
+        this.router.navigate(['list']);
       });
     } else {
       this.employeeSerive.updateEmployee(this.employeeForm.value).subscribe(() => {
