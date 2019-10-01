@@ -106,11 +106,10 @@
                     <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
                         aria-describedby="confirmPassworddHelp" placeholder="Enter Confirm Password"
                         formControlName="confirmPassword">
-                    <div class="form-error" *ngIf="formErrors.confirmPassword">
-                        {{ formErrors.confirmPassword }}
-                    </div>
-                    <div class="form-error" *ngIf="formErrors.passwordGroup">
-                        {{ formErrors.passwordGroup }}
+                    <div class="form-error">
+                        <ng-container *ngIf="formErrors.confirmPassword">{{ formErrors.confirmPassword }}</ng-container>
+                        <ng-container *ngIf="!formErrors.confirmPassword && formErrors.passwordGroup">
+                            {{ formErrors.passwordGroup }}</ng-container>
                     </div>
                 </div>
             </div>
