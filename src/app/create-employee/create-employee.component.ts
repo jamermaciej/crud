@@ -3,6 +3,7 @@ import { Department } from '../models/department.model';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 
 import { PasswordValidator } from './../validators/password.validator';
+import { EmailDomainValidator } from './../validators/email-domain.validator';
 import { EmployeeService } from '../services/employee.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
@@ -44,7 +45,9 @@ export class CreateEmployeeComponent implements OnInit {
       'maxlength': 'Name must be less than 10 characters.'
     },
     'email': {
-      'required': 'Email is required.'
+      'required': 'Email is required.',
+      'email': 'Your email address is invalid.',
+      'emailDomain': 'Email domain should be gmail.com.'
     },
     'phone': {
       'required': 'Phone is required.'
@@ -103,7 +106,7 @@ export class CreateEmployeeComponent implements OnInit {
     this.employeeForm = this.formBuilder.group({
       id: null,
       name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(10)]],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email, EmailDomainValidator.validateEmailDomain('gmail.com') ]],
       phone: [''],
       contactPreference: ['Email', Validators.required],
       gender: ['', Validators.required],
@@ -183,7 +186,7 @@ export class CreateEmployeeComponent implements OnInit {
           // for (const error in abstractControl.errors)
           for (const errorKey of Object.keys(abstractControl.errors)) {
             if (errorKey) {
-              this.formErrors[key] += messages[errorKey];
+              this.formErrors[key] += `${messages[errorKey]} \n`;
             }
           }
         }
