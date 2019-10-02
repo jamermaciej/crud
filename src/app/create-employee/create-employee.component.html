@@ -114,7 +114,7 @@
                 </div>
             </div>
             <div class="skills">
-                <button type="button" class="btn btn-primary" (click)="addSkills()">Add skill</button>
+                <button type="button" class="btn btn-primary" (click)="addSkills()" [disabled]="employeeForm.get('skills').invalid">Add skill</button>
                 <div class="skills__container" formArrayName="skills"
                     *ngFor="let skill of skills.controls; let i = index">
                     <div class="skills__header">
@@ -127,7 +127,7 @@
                             <input type="text" class="form-control" [id]="'skillId_' + i" name="skill"
                                 aria-describedby="skillHelp" placeholder="Enter skill name" formControlName="skill">
                             <div class="form-error" *ngIf="skill.get('skill').errors?.required && skill.get('skill').touched">
-                                    Description is required.
+                                    Skill name is required.
                             </div>
                         </div>
                         <div class="form-group">
@@ -136,7 +136,7 @@
                                 aria-describedby="experienceHelp" placeholder="Enter your experience"
                                 formControlName="experience">
                             <div class="form-error" *ngIf="skill.get('experience').errors?.required && skill.get('experience').touched">
-                                    Description is required.
+                                    Experience is required.
                             </div>
                         </div>
                         <div class="form-group">
