@@ -1,3 +1,4 @@
+import { Skill } from './skill.model';
 export interface Employee {
     id: number;
     name: string;
@@ -9,4 +10,5 @@ export interface Employee {
     department: string;
     isActive: boolean;
     photoPath?: string;
+    skills: Skill[];
 }
