@@ -88,20 +88,7 @@ export class CreateEmployeeComponent implements OnInit {
   };
 
   formErrors = {
-    'name': '',
-    'email': '',
-    'phone': '',
-    'contactPreference': '',
-    'gender': '',
-    'department': '',
-    'dateOfBirth': '',
-    'photoPath': '',
-    'passwordGroup': '',
-    'password': '',
-    'confirmPassword': '',
-    'skill': '',
-    'experience': '',
-    'description': ''
+
   };
 
   employeeForm: FormGroup;
