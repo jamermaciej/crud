@@ -785,6 +785,75 @@
         "confirmPassword": "",
         "password": ""
       }
+    },
+    {
+      "id": 59,
+      "name": "",
+      "email": "",
+      "phone": "",
+      "contactPreference": "Email",
+      "gender": "",
+      "department": "",
+      "dateOfBirth": "",
+      "photoPath": "",
+      "isActive": "",
+      "passwordGroup": {
+        "password": "",
+        "confirmPassword": ""
+      },
+      "skills": [
+        {
+          "name": "",
+          "experience": "",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "id": 60,
+      "name": "",
+      "email": "",
+      "phone": "",
+      "contactPreference": "Email",
+      "gender": "",
+      "department": "",
+      "dateOfBirth": "",
+      "photoPath": "",
+      "isActive": "",
+      "passwordGroup": {
+        "password": "",
+        "confirmPassword": ""
+      },
+      "skills": [
+        {
+          "name": "",
+          "experience": "",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "id": 61,
+      "name": "",
+      "email": "",
+      "phone": "",
+      "contactPreference": "Email",
+      "gender": "",
+      "department": "",
+      "dateOfBirth": "",
+      "photoPath": "",
+      "isActive": "",
+      "passwordGroup": {
+        "password": "",
+        "confirmPassword": ""
+      },
+      "skills": [
+        {
+          "skill": "",
+          "experience": "",
+          "description": ""
+        }
+      ]
     }
   ]
 }

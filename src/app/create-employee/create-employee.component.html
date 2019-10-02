@@ -113,6 +113,44 @@
                     </div>
                 </div>
             </div>
+            <div class="skills">
+                <button type="button" class="btn btn-primary" (click)="addSkills()">Add skill</button>
+                <div class="skills__container" formArrayName="skills"
+                    *ngFor="let skill of skills.controls; let i = index">
+                    <div class="skills__header">
+                        <h3>Skill {{ i + 1 }}</h3>
+                        <button class="btn btn-danger" (click)="removeSkills(i)">remove</button>
+                    </div>
+                    <div class="skills__content" [formGroupName]="i">
+                        <div class="form-group">
+                            <label for="{{ 'skillId_' + i }}"></label>
+                            <input type="text" class="form-control" id="{{ 'skillId_' + i }}" name="skill"
+                                aria-describedby="skillHelp" placeholder="Enter skill name" formControlName="skill">
+                            <div class="form-error" *ngIf="formErrors.skill">
+                                {{ formErrors.skill }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="experience"></label>
+                            <input type="text" class="form-control" id="experience" name="experience"
+                                aria-describedby="experienceHelp" placeholder="Enter your experience"
+                                formControlName="experience">
+                            <div class="form-error" *ngIf="formErrors.experience">
+                                {{ formErrors.experience }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description"></label>
+                            <textarea class="form-control" id="description" name="description"
+                                aria-describedby="descriptionHelp" placeholder="Enter description your skill"
+                                formControlName="description"></textarea>
+                            <div class="form-error" *ngIf="formErrors.description">
+                                {{ formErrors.description }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <button type="submit" [disabled]="!employeeForm.invalid" class="btn btn-primary">Submit</button>
         </form>
     </div>

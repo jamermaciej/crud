@@ -1,6 +1,6 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Department } from '../models/department.model';
-import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from '@angular/forms';
 
 import { PasswordValidator } from './../validators/password.validator';
 import { EmailDomainValidator } from './../validators/email-domain.validator';
@@ -75,6 +75,15 @@ export class CreateEmployeeComponent implements OnInit {
     },
     'confirmPassword': {
       'required': 'Confirm password is required.',
+    },
+    'skill': {
+      'required': 'Skill name is required.',
+    },
+    'experience': {
+      'required': 'Skill name is required.',
+    },
+    'description': {
+      'required': 'Skill name is required.',
     }
   };
 
@@ -89,7 +98,10 @@ export class CreateEmployeeComponent implements OnInit {
     'photoPath': '',
     'passwordGroup': '',
     'password': '',
-    'confirmPassword': ''
+    'confirmPassword': '',
+    'skill': '',
+    'experience': '',
+    'description': ''
   };
 
   employeeForm: FormGroup;
@@ -97,6 +109,9 @@ export class CreateEmployeeComponent implements OnInit {
   modalRef: BsModalRef;
   @ViewChild('discardModal', { static: false })
   discardModal;
+
+  // skills: FormArray;
+
 
   constructor(private formBuilder: FormBuilder,
               private employeeSerive: EmployeeService,
@@ -122,6 +137,7 @@ export class CreateEmployeeComponent implements OnInit {
         password: ['', Validators.required],
         confirmPassword: ['', Validators.required]
       }, { validator: PasswordValidator.validatePassword}),
+      skills: this.formBuilder.array([this.buildSkills()])
     });
 
     this.route.paramMap.subscribe(param => {
@@ -136,6 +152,26 @@ export class CreateEmployeeComponent implements OnInit {
     this.employeeForm.get('contactPreference').valueChanges.subscribe(data => {
       this.onContactPreferenceChange(data);
     });
+  }
+
+  buildSkills(): FormGroup {
+    return this.formBuilder.group({
+      skill: ['', Validators.required],
+      experience: ['', Validators.required],
+      description: ['', Validators.required]
+    });
+  }
+
+  get skills(): FormArray {
+    return <FormArray>this.employeeForm.get('skills');
+  }
+
+  addSkills(): void {
+    this.skills.push(this.buildSkills());
+  }
+
+  removeSkills(i): void {
+    this.skills.removeAt(i);
   }
 
   getEmployee(id: number) {
