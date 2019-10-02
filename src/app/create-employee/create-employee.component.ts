@@ -114,18 +114,18 @@ export class CreateEmployeeComponent implements OnInit {
 
 
   constructor(private formBuilder: FormBuilder,
-              private employeeSerive: EmployeeService,
-              private router: Router,
-              private modalService: BsModalService,
-              private createEmployeeCanDeactivateGuard: CreateEmployeeCanDeactivateGuardService,
-              private route: ActivatedRoute
+    private employeeSerive: EmployeeService,
+    private router: Router,
+    private modalService: BsModalService,
+    private createEmployeeCanDeactivateGuard: CreateEmployeeCanDeactivateGuardService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
     this.employeeForm = this.formBuilder.group({
       id: null,
       name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(10)]],
-      email: ['', [Validators.required, Validators.email, EmailDomainValidator.validateEmailDomain('gmail.com') ]],
+      email: ['', [Validators.required, Validators.email, EmailDomainValidator.validateEmailDomain('gmail.com')]],
       phone: [''],
       contactPreference: ['Email', Validators.required],
       gender: ['', Validators.required],
@@ -136,7 +136,7 @@ export class CreateEmployeeComponent implements OnInit {
       passwordGroup: this.formBuilder.group({
         password: ['', Validators.required],
         confirmPassword: ['', Validators.required]
-      }, { validator: PasswordValidator.validatePassword}),
+      }, { validator: PasswordValidator.validatePassword }),
       skills: this.formBuilder.array([this.buildSkills()])
     });
 
@@ -220,7 +220,7 @@ export class CreateEmployeeComponent implements OnInit {
       this.formErrors[key] = '';
       // console.log(`Key = ${key} Value = ${abstractControl.value}`);
 
-      if ( abstractControl && abstractControl.invalid && (abstractControl.touched || abstractControl.dirty)) {
+      if (abstractControl && abstractControl.invalid && (abstractControl.touched || abstractControl.dirty)) {
         const messages = this.validatorsMessages[key];
         // for (const errorKey of Object.keys(abstractControl.errors)) {
         for (const errorKey in abstractControl.errors) {
@@ -234,12 +234,21 @@ export class CreateEmployeeComponent implements OnInit {
       if (abstractControl instanceof FormGroup) {
         this.logValidationErrors(abstractControl);
       }
+
+      // sprawdzenie czy nie ma zagniezdzonych formArray
+      if (abstractControl instanceof FormArray) {
+        for (const control of abstractControl.controls) {
+          if (control instanceof FormGroup) {
+            this.logValidationErrors(control);
+          }
+        }
+      }
     });
   }
 
   onContactPreferenceChange(selectedValue: string) {
     const phoneFormControl = this.employeeForm.get('phone');
-    if ( selectedValue === 'Phone') {
+    if (selectedValue === 'Phone') {
       phoneFormControl.setValidators(Validators.required);
     } else {
       phoneFormControl.clearValidators();
