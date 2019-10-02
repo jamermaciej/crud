@@ -119,7 +119,7 @@
                     *ngFor="let skill of skills.controls; let i = index">
                     <div class="skills__header">
                         <h3>Skill {{ i + 1 }}</h3>
-                        <button class="btn btn-danger" (click)="removeSkills(i)">remove</button>
+                        <button class="btn btn-danger" (click)="removeSkills(i)" *ngIf="i">remove</button>
                     </div>
                     <div class="skills__content" [formGroupName]="i">
                         <div class="form-group">
