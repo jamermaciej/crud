@@ -151,6 +151,7 @@ export class CreateEmployeeComponent implements OnInit {
 
   get skills(): FormArray {
     return <FormArray>this.employeeForm.get('skills');
+    console.log('master');
   }
 
   addSkills(): void {
